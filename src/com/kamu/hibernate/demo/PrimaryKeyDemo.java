@@ -22,20 +22,36 @@ public class PrimaryKeyDemo {
 				try {			
 					// create 3 student object
 					System.out.println("Creating new student object...");
-					Student tempStudent = new Student("Paul", "Smith", "Paul@kamu72code.com");
-					Student tempStudent1 = new Student("Jonny", "Vali", "Jonny@kamu72code.com");
-					Student tempStudent2 = new Student("Alex", "Sandra", "Alex@kamu72code.com");
+					Student tempStudent = new Student("Kamu", "Aya", "Aya@kamu72code.com");
 					
 					// start a transaction
 					session.beginTransaction();
 					
 					// save the student object
 					System.out.println("Saving the student...");
+					System.out.println(tempStudent);
 					session.save(tempStudent);
-					session.save(tempStudent1);
-					session.save(tempStudent2);
 					
 					// commit transaction
+					session.getTransaction().commit();
+					
+					// MY NEW CODE
+					
+					// find out the student's id: primary key
+					System.out.println("Saved student. Generated id: " + tempStudent.getId());
+					
+					// now get a new session and start transaction
+					session = factory.getCurrentSession();
+					session.beginTransaction();
+					
+					// retrieve student based on the id : primary key
+					System.out.println("\nGetting student with id: " + tempStudent.getId());
+					
+					Student mystudent = session.get(Student.class, tempStudent.getId());
+					
+					System.out.println("Get complete: " + mystudent);
+					
+					// commit the transaction
 					session.getTransaction().commit();
 					
 					System.out.println("Done!");
